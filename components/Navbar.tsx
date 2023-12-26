@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { redirect } from "next/navigation";
 import { HomeIcon, Menu, Rocket } from "lucide-react";
 import { Button } from "./ui/button";
+import { ThemeToggle } from "./theme-toggle";
+import Link from "next/link";
 // import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 
 const Navbar = () => {
@@ -17,7 +19,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const paths = [
     { name: "Home", path: "/", icon: <HomeIcon size={24} /> },
-    { name: "About", path: "/about", icon: <HomeIcon size={24} /> },
+    { name: "Templates", path: "/templates", icon: <HomeIcon size={24} /> },
     { name: "Contact", path: "/contact", icon: <HomeIcon size={24} /> },
   ];
 
@@ -35,25 +37,30 @@ const Navbar = () => {
         >
           {paths.map((path, index) => (
             <div key={index} className="cursor-pointer">
-              <p className="text-lg font-sans font-semibold">{path.name}</p>
+              <Link href={path.path} className="text-lg font-sans font-semibold">{path.name}</Link>
             </div>
           ))}
         </div>
         <div className="hidden md:block ml-auto">
-          {/* button goes here */}
+          <div className="flex gap-3">
           <Button>Get Started</Button>
+          <ThemeToggle />
+
+          </div>
+          {/* button goes here */}
         </div>
       </div>
       {/* mobile menu */}
       {isMenuOpen && (
         
-        <div className="flex flex-col md:hidden bg-gray-100 border px-5 py-2 space-y-2">
+        <div className="flex flex-col md:hidden bg-gray-100 dark:bg-gray-700 border px-5 py-2 space-y-2">
           {paths.map((path, index) => (
-            <div key={index} className="cursor-pointer flex items-center border-b p-2 mb-2 hover:bg-black transition ease-in-out hover:text-white rounded-md">
+            <div key={index} className="cursor-pointer flex items-center border-b p-2 mb-2 hover:bg-black transition ease-in-out hover:text-white dark:hover:bg-white dark:hover:text-black rounded-md">
               <p className="text-lg font-sans font-semibold mr-4  ">{path.name}</p>
               {path.icon}
             </div>
           ))}
+          <ThemeToggle />
         </div>
       
       )}
